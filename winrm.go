@@ -19,7 +19,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/masterzen/winrm/winrm"
+	"github.com/mefellows/winrm/winrm"
 	"os"
 )
 
@@ -40,11 +40,12 @@ func main() {
 
 	cmd = flag.Arg(0)
 	client := winrm.NewClient(&winrm.Endpoint{hostname, port}, user, pass)
-	exitCode, err := client.RunWithInput(cmd, os.Stdout, os.Stderr, os.Stdin)
+	err := client.RunWithInput(cmd, os.Stdout, os.Stderr, os.Stdin)
 
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
-	os.Exit(exitCode)
+	os.Exit(0)
 }
